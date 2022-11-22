@@ -2,5 +2,5 @@ import demo.orderFeeds.AntiMoneyLaunderingReportOrder
 
 namespace demo.orderFeeds
 
-[[ hello world dog cat rabbit spaghetti ]] 
+[[ hello world dog cat rabbit spaghetti box ]] 
 type extension AntiMoneyLaunderingReportOrder {}
