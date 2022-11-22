@@ -1,0 +1,51 @@
+
+namespace demo.orderFeeds.users
+
+model User
+
+[[
+Top level concept of a User ID assigned to uniquely identify an employee to IT systems within the Bank.
+]]
+type UserId inherits String
+[[
+Category of trader ID to encompass the different types of trader IDs which are assigned by internal and external systems of the Bank.
+]]
+type TraderId inherits UserId
+[[
+Specific User ID assigned only to traders who are executing trades within the Bank.
+]]
+type BankTraderId inherits TraderId
+
+[[
+A given name (also known as a first name or forename) is the part of a personal name that identifies a person,
+]]
+type FirstName inherits String
+[[
+In some cultures, a surname, family name, or last name is the portion of one's personal name that indicates one's family, tribe or community.
+]]
+type LastName inherits String
+
+enum Desk {
+    Equities,
+    FixedIncome,
+    Fx,
+    Commodities
+}
+
+model Trader inherits User {
+    @Id
+    id: BankTraderId
+    firstName: FirstName
+    lastName: LastName
+    desk: Desk
+}
+
+@ServiceDiscoveryClient(serviceName = "users-service")
+service UserService {
+
+    @HttpOperation(method = 'GET', url = '/traders')
+    operation getTraders(): Trader[]
+
+    @HttpOperation(method = 'GET', url = '/trader/{id}')
+    operation getTrader(id: BankTraderId): Trader
+}

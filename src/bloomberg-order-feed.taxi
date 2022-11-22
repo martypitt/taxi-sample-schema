@@ -1,0 +1,55 @@
+import demo.orderFeeds.TradeDate
+import demo.orderFeeds.Cusip
+import demo.orderFeeds.RemainingSize
+import demo.orderFeeds.TotalSize
+import demo.orderFeeds.FilledSize
+import demo.orderFeeds.Currency
+import demo.orderFeeds.OrderId
+import demo.orderFeeds.OrderType
+import demo.orderFeeds.OrderStatus
+import demo.orderFeeds.EventDateTime
+import demo.orderFeeds.Isin
+import demo.orderFeeds.Order
+import demo.orderFeeds.CounterpartyLei
+import demo.orderFeeds.users.TraderId
+
+namespace demo.orderFeeds.bloomberg
+
+[[
+ID of traders when they're placing orders via BBG.
+]]
+type BloombergTraderId inherits TraderId
+[[
+ID of orders which are received via the Bloomberg feed.
+]]
+type BloombergOrderId inherits OrderId
+
+type BloombergTotalSize inherits TotalSize
+
+type BbgTotalSize inherits TotalSize
+type alias BbgTotalSize as BloombergTotalSize
+
+@Format("dd-MMM-yy")
+type BloombergTradeDate inherits TradeDate
+
+@ApprovedDataSource
+model BloombergOrder inherits Order {
+    orderId: BloombergOrderId
+    cusip: Cusip
+    isin: Isin
+    tradeDate: BloombergTradeDate
+    trader: BloombergTraderId
+    totalSize: BloombergTotalSize
+    remainingSize: RemainingSize
+    filledSize: FilledSize by (this.totalSize - this.remainingSize)
+}
+
+@Datasource
+@ServiceDiscoveryClient(serviceName = "bloomberg-order-feed")
+service BloombergOrderFeedService {
+    @HttpOperation(method = 'GET', url = '/orders')
+    operation getOrders(): BloombergOrder[]
+
+    @HttpOperation(method = 'GET', url = '/order/{orderId}')
+    operation getOrder(orderId: BloombergOrderId): BloombergOrder
+}

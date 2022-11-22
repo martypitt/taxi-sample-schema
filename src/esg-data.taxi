@@ -1,0 +1,41 @@
+import demo.orderFeeds.Cusip
+import demo.orderFeeds.Isin
+namespace demos.esg {
+    type EnvironmentalScore inherits Decimal
+    type SocialScore inherits Decimal
+    type GovernanceScore inherits Decimal
+}
+
+namespace msci {
+    model EsgData {
+        isin: Isin
+          environmentalScore: demos.esg.EnvironmentalScore
+  socialScore: demos.esg.SocialScore      
+  governanceScore: demos.esg.GovernanceScore       
+    }
+
+
+    @ServiceDiscoveryClient(serviceName = "esg-services")
+    service MsciEsgService {
+        @HttpOperation(method = "GET", url = "/msci/esgScores/{isin}")
+        operation getMsciEsgData(@PathVariable("isin") isin: Isin):EsgData
+    }
+}
+
+namespace refinitiv {
+    model EsgScore {
+        e_score: demos.esg.EnvironmentalScore
+        s_score: demos.esg.SocialScore
+        g_score: demos.esg.GovernanceScore
+    }
+    model AssetInfo {
+        cusip: Cusip
+        esgScores: EsgScore
+    }
+
+    @ServiceDiscoveryClient(serviceName = "esg-services")
+    service RefinitivEsgService {
+        @HttpOperation(method = "GET", url = "/refinitiv/assetInfo/{cusip}")
+        operation getAssetInfo(@PathVariable("cusip") cusip:Cusip):AssetInfo
+    }
+}

@@ -1,0 +1,13 @@
+import demo.orderFeeds.InstrumentId
+import demo.orderFeeds.Cusip
+import demo.orderFeeds.Isin
+
+namespace demo.orderFeeds.instrumentIdMappings
+
+model InstrumentIdMapping {
+    bankInstrumentId: InstrumentId by column("id")
+    @Id
+    cusip: Cusip by column("cusip")
+    @Id
+    isin: Isin  by column("isin")
+}

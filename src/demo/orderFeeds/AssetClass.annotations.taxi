@@ -1,0 +1,7 @@
+namespace demo.orderFeeds
+
+// This code is generated, and will be automatically updated
+@io.vyne.catalog.DataOwner(id = "userId1", name = "Serhat Tuncay")
+@CDE
+@ApprovedDataSource
+enum extension AssetClass {}

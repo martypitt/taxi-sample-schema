@@ -1,0 +1,13 @@
+import demo.orderFeeds.users.BankTraderId
+import demo.orderFeeds.bloomberg.BloombergTraderId
+import demo.orderFeeds.icap.IcapTraderId
+
+namespace demo.orderFeeds.traderIdMappings
+
+model TraderIdMappings {
+    bankTraderId: BankTraderId by column("bankTraderId")
+    @Id
+    bloombergId: BloombergTraderId by column("bloombergId")
+    @Id
+    icapId: IcapTraderId by column("icapId")
+}

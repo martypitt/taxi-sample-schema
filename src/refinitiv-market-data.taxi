@@ -1,0 +1,20 @@
+import demo.orderFeeds.AssetClass
+
+namespace demo.orderFeeds.refinitiv
+
+type RefinitivInstrumentId inherits String
+
+[[
+The maturity date of an Instrument, as provided by Reuters.
+]]
+type ReutersMaturityDate inherits Date
+
+model RefinitivInstrument {
+    id: RefinitivInstrumentId
+    assetClass: AssetClass
+}
+
+
+service RefinitivMarketDataService {
+    operation getInstruments(): RefinitivInstrument[]
+}

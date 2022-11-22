@@ -1,0 +1,54 @@
+import demo.orderFeeds.TradeDate
+import demo.orderFeeds.RemainingSize
+import demo.orderFeeds.FilledSize
+import demo.orderFeeds.TotalSize
+import demo.orderFeeds.Currency
+import demo.orderFeeds.OrderId
+import demo.orderFeeds.OrderType
+import demo.orderFeeds.OrderStatus
+import demo.orderFeeds.EventDateTime
+import demo.orderFeeds.Isin
+import demo.orderFeeds.Cusip
+import demo.orderFeeds.Order
+import demo.orderFeeds.users.TraderId
+
+
+namespace demo.orderFeeds.icap
+
+[[
+ID of traders when they're placing orders via ICAP.
+]]
+type IcapTraderId inherits TraderId
+[[
+ID of orders which are received via the ICAP feed.
+]]
+type IcapOrderId inherits OrderId
+
+@Format("dd-MM-yyyy")
+type IcapTradeDate inherits TradeDate
+
+model IcapOrder inherits Order {
+    orderId: IcapOrderId
+    cusip: Cusip
+    isin: Isin
+    traderId: IcapTraderId
+    timestamp: EventDateTime
+    tradeDate: IcapTradeDate
+    status: OrderStatus
+    orderType: OrderType
+    currency: Currency
+    filledSize: FilledSize
+    remainingSize: RemainingSize
+    totalSize: TotalSize by (this.filledSize + this.remainingSize) 
+}
+
+@Datasource
+@ServiceDiscoveryClient(serviceName = "icap-order-feed")
+service IcapOrderFeedService {
+
+    @HttpOperation(method = 'GET', url = '/orders')
+    operation getOrders(): IcapOrder[]
+
+    @HttpOperation(method = 'GET', url = '/order/{orderId}')
+    operation getOrder(orderId: IcapOrderId): IcapOrder
+}

@@ -1,0 +1,68 @@
+import demo.orderFeeds.MaturityDate
+import demo.orderFeeds.Isin
+import demo.orderFeeds.TotalSize
+import demo.orderFeeds.Currency
+namespace demo.orderFeeds.trading
+
+
+service FixedIncomeTradingSystem {
+    lineage {
+        consumes operation demo.orderFeeds.instrument.InstrumentService.getInstruments
+        consumes operation demo.orderFeeds.icap.IcapOrderFeedService.getOrders
+        consumes operation demo.orderFeeds.bloomberg.BloombergOrderFeedService.getOrders
+    }
+
+    operation getTrades(): BondTrade[]
+}
+
+service FxTradingSystem {
+    lineage {
+        consumes operation demo.orderFeeds.instrument.InstrumentService.getInstruments
+        consumes operation demo.orderFeeds.icap.IcapOrderFeedService.getOrders
+        consumes operation demo.orderFeeds.bloomberg.BloombergOrderFeedService.getOrders
+        consumes operation demo.orderFeeds.trading.DateService.getTradeDate
+    }
+
+    operation getTrades(): FxTrade[]
+}
+
+enum SettlementPeriod {
+    TPlus1,
+    TPlus2
+}
+
+service DateService {
+
+    operation getTradeDate(period: SettlementPeriod, currencyPair: CurrencyPair): SettlementDate
+}
+
+
+type TradeId inherits String
+type Notional inherits Decimal
+type CurrencyPair inherits String
+type SettlementDate inherits Date
+
+enum Direction {
+    Buy,
+    Sell
+}
+
+model Trade
+
+model FxTrade inherits Trade {
+    tradeId: TradeId
+    currency: CurrencyPair
+    notional: Notional
+    settlementDate: SettlementDate
+    direction: Direction
+}
+
+
+model BondTrade inherits Trade {
+    tradeId: TradeId
+    currency: Currency
+    size: TotalSize
+    isin: Isin
+    maturityDate: MaturityDate
+    direction: Direction
+}

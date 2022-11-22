@@ -1,0 +1,16 @@
+import demo.orderFeeds.MaturityDate
+import demo.orderFeeds.AssetClass
+
+namespace demo.orderFeeds.reuters
+
+type ReutersInstrumentId inherits String
+
+model ReutersInstrument {
+    id: ReutersInstrumentId
+    assetClass: AssetClass
+    maturityDate: MaturityDate
+}
+
+service ReutersMarketDataService {
+    operation getInstruments(): ReutersInstrument[]
+}

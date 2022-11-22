@@ -1,0 +1,18 @@
+import demo.orderFeeds.instrument.Instrument
+import demo.orderFeeds.InstrumentId
+
+namespace demo.orderFeeds.dataWarehouse
+
+
+service DataWarehouse {
+    lineage {
+        consumes operation demo.orderFeeds.instrument.InstrumentService.getInstruments
+        consumes operation demo.orderFeeds.icap.IcapOrderFeedService.getOrders
+        consumes operation demo.orderFeeds.bloomberg.BloombergOrderFeedService.getOrders
+    }
+
+    operation getInstruments(): Instrument[]
+
+    operation getInstrument(id: InstrumentId): Instrument
+}
+

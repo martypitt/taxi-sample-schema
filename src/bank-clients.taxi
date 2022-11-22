@@ -1,0 +1,25 @@
+namespace demo.orderFeeds.clients
+
+type BankClientId inherits String
+type CompanyName inherits String
+type CompanyCountry inherits String
+type LegalEntityIdentifier inherits String
+
+model Client {
+    @Id
+    bankClientId: BankClientId
+    companyName: CompanyName
+    country: CompanyCountry
+    lei: LegalEntityIdentifier
+}
+
+
+@ServiceDiscoveryClient(serviceName = "client-service")
+service ClientService {
+
+    @HttpOperation(method = 'GET', url = '/clients')
+    operation getClients(): Client[]
+
+    @HttpOperation(method = 'GET', url = '/client/{id}')
+    operation getClient(@PathVariable(name = "id") id: BankClientId): Client
+}

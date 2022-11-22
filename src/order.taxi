@@ -1,0 +1,119 @@
+import demo.orderFeeds.users.TraderId
+import demo.orderFeeds.users.BankTraderId
+import demo.orderFeeds.users.Desk
+import demo.orderFeeds.users.LastName
+
+namespace demo.orderFeeds
+
+model Order
+
+// (@format = "yyyy, MMMM dd")
+
+model AntiMoneyLaunderingReportOrder {
+    orderId: OrderId
+    @FirstNotEmpty
+    isin: Isin
+    @FirstNotEmpty
+    cusip: Cusip
+    tradeDate: TradeDate
+    assetClass: AssetClass
+    maturityDate: MaturityDate
+    traderId: BankTraderId
+    desk: Desk
+    lastName: LastName
+    remainingSize: RemainingSize
+    filledSize: FilledSize
+    totalSize: TotalSize
+}
+
+[[
+    Top level type to represent the various types of Order IDs that exist in the bank.
+]]
+type OrderId inherits String
+
+[[
+    The way the order is going to executed on the exchange.
+]]
+enum OrderType {
+    Market,
+    Limit,
+    StopLimit,
+    Iceberg
+}
+
+[[
+The current status of the order that has been placed.
+]]
+enum OrderStatus {
+    New,
+    PartiallyFilled,
+    Filled,
+    Cancelled,
+    Expired
+}
+
+enum BbgAssetClass {
+    Forex synonym of AssetClass.Fx,
+    FixedIncome synonym of AssetClass.Bonds,
+    Shares synonym of AssetClass.Equities
+}
+
+[[
+An asset class is a grouping of investments that exhibit similar characteristics and are subject to the same laws and regulations. Asset classes are thus made up of instruments that often behave similarly to one another in the marketplace.
+]]
+@io.vyne.catalog.DataOwner( id = "userId1" , name = "Serhat Tuncay" )
+@CDE
+enum AssetClass {
+    [[ Forex is the abbreviation for foreign exchange – the market in which one currency is converted into another. The forex market can also be referred to as the FX market or currency market. ]]
+    Fx,
+    [[ Fixed income assets are investments that pay interest over time and then return the original sum paid. Bonds are the most common type of fixed income asset ]]
+    Bonds,
+    [[ Equities, also known as stocks, are the shares that make up the ownership of public companies. Within this asset class, there is further variation between large-cap, mid-cap and small-cap stocks ]]
+    Equities
+}
+
+[[
+The date when this product will reach maturity.
+]]
+type MaturityDate inherits Date
+
+[[
+An International Securities Identification Number (ISIN) is a 12-digit alphanumeric code that uniquely identifies a specific security. The organization that allocates ISINs in any particular country is the country's respective National Numbering Agency (NNA).
+]]
+@io.vyne.catalog.DataOwner( id = "userId1" , name = "Marty Pitt" )
+@CDE
+type Isin inherits String
+[[
+CUSIP refers to the Committee on Uniform Securities Identification Procedures which oversees the entire CUSIP system. The CUSIP number is a unique identification number assigned to all stocks and registered bonds in the United States and Canada, and it is used to create a concrete distinction between securities that are traded on public markets.
+]]
+type Cusip inherits String
+[[
+The unique ID assigned to an instrument within the bank.
+]]
+type InstrumentId inherits String
+
+type Lei inherits String
+type CounterpartyLei inherits Lei
+
+type EventDate inherits Date
+type EventTime inherits Time
+type EventDateTime inherits Instant
+
+type TradeDate inherits Date
+
+[[
+The total size of the order placed.
+]]
+type TotalSize inherits Decimal
+[[
+The amount of the order which has been filled to date.
+]]
+type FilledSize inherits Decimal
+[[
+The amount of the order left to be filled
+]]
+type RemainingSize inherits Decimal
+[[
+The currency in which this order will exchange.
+]]
+type Currency inherits String
