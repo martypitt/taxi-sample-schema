@@ -1,0 +1,6 @@
+import demo.orderFeeds.AntiMoneyLaunderingReportOrder
+
+namespace demo.orderFeeds
+
+[[ abcd ]] 
+type extension AntiMoneyLaunderingReportOrder {}
