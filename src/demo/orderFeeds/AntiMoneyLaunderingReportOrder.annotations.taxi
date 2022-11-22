@@ -1,0 +1,6 @@
+namespace demo.orderFeeds
+
+// This code is generated, and will be automatically updated
+@io.vyne.catalog.DataOwner(id = "michael.stone", name = "Michael Stone")
+@foo
+type extension AntiMoneyLaunderingReportOrder {}
