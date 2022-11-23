@@ -1,0 +1,6 @@
+import demo.orderFeeds.users.Desk
+
+namespace demo.orderFeeds.users
+
+[[ dd ]] 
+type extension Desk {}
