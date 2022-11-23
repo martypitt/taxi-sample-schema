@@ -1,0 +1,6 @@
+import demo.orderFeeds.MaturityDate
+
+namespace demo.orderFeeds
+
+[[ The date when this product will reach maturity ]] 
+type extension MaturityDate {}
