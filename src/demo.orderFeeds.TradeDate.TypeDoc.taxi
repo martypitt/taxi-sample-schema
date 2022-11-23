@@ -1,0 +1,6 @@
+import demo.orderFeeds.TradeDate
+
+namespace demo.orderFeeds
+
+[[ The date a trade was settled ]] 
+type extension TradeDate {}
