@@ -2,5 +2,5 @@ import demo.orderFeeds.TradeDate
 
 namespace demo.orderFeeds
 
-[[ abc ]] 
+[[ The date that a trade was executed ]] 
 type extension TradeDate {}

@@ -1,28 +1,28 @@
-import demo.orderFeeds.MaturityDate
-import demo.orderFeeds.AssetClass
-import demo.orderFeeds.InstrumentId
-import demo.orderFeeds.MaturityDate
+// import demo.orderFeeds.MaturityDate
+// import demo.orderFeeds.AssetClass
+// import demo.orderFeeds.InstrumentId
+// import demo.orderFeeds.MaturityDate
 
-namespace demo.orderFeeds.instrument
+// namespace demo.orderFeeds.instrument
 
-model Instrument {
-    id: InstrumentId
-    assetClass: AssetClass
-    maturityDate: MaturityDate
-}
+// model Instrument {
+//     id: InstrumentId
+//     assetClass: AssetClass
+//     maturityDate: MaturityDate
+// }
 
 
-@ServiceDiscoveryClient(serviceName = "instrument-ref-service")
-service InstrumentService {
-    lineage {
-        consumes operation demo.orderFeeds.reuters.ReutersMarketDataService.getInstruments
-        consumes operation demo.orderFeeds.refinitiv.RefinitivMarketDataService.getInstruments
-    }
+// @ServiceDiscoveryClient(serviceName = "instrument-ref-service")
+// service InstrumentService {
+//     lineage {
+//         consumes operation demo.orderFeeds.reuters.ReutersMarketDataService.getInstruments
+//         consumes operation demo.orderFeeds.refinitiv.RefinitivMarketDataService.getInstruments
+//     }
 
-    @HttpOperation(method = 'GET', url = '/instruments')
-    operation getInstruments(): Instrument[]
+//     @HttpOperation(method = 'GET', url = '/instruments')
+//     operation getInstruments(): Instrument[]
 
-    @HttpOperation(method = 'GET', url = '/instrument/{id}')
-    operation getInstrument(id: InstrumentId): Instrument
-}
+//     @HttpOperation(method = 'GET', url = '/instrument/{id}')
+//     operation getInstrument(id: InstrumentId): Instrument
+// }
 
