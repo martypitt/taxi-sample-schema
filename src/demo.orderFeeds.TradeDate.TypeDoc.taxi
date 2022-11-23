@@ -1,0 +1,6 @@
+import demo.orderFeeds.TradeDate
+
+namespace demo.orderFeeds
+
+[[ abc ]] 
+type extension TradeDate {}
