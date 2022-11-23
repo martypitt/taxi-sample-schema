@@ -2,5 +2,5 @@ import demo.orderFeeds.TradeDate
 
 namespace demo.orderFeeds
 
-[[ abc ]] 
+[[ foo bar ]] 
 type extension TradeDate {}
