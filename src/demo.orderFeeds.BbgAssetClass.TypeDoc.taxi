@@ -1,0 +1,6 @@
+import demo.orderFeeds.BbgAssetClass
+
+namespace demo.orderFeeds
+
+[[ asdf ]] 
+type extension BbgAssetClass {}
